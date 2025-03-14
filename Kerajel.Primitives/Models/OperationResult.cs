@@ -28,6 +28,11 @@ public class OperationResult<T>
         Content = content;
     }
 
+    public OperationResult(OperationStatus operationStatus)
+    {
+        OperationStatus = operationStatus;
+    }
+
     public T? Content { get; set; }
 
     public OperationStatus OperationStatus { get; set; }
@@ -66,4 +71,14 @@ public class OperationResult
     public Exception? Exception { get; set; }
 
     public bool Succeeded => OperationStatus == OperationStatus.Succeeded;
+
+    public static OperationResult FromFaulted<T>(OperationResult<T> operationResult)
+    {
+        return new OperationResult(OperationStatus.Faulted, operationResult.ErrorMessage, operationResult.Exception);
+    }
+
+    public static OperationResult Faulted(string errorMessage, Exception? ex = default)
+    {
+        return new OperationResult(OperationStatus.Faulted, errorMessage, ex);
+    }
 }
