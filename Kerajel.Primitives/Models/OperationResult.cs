@@ -77,8 +77,8 @@ public class OperationResult
         return new OperationResult(OperationStatus.Faulted, operationResult.ErrorMessage, operationResult.Exception);
     }
 
-    public static OperationResult Faulted(string errorMessage, Exception? ex = default)
+    public static OperationResult FromFaulted(OperationResult operationResult)
     {
-        return new OperationResult(OperationStatus.Faulted, errorMessage, ex);
+        return new OperationResult(OperationStatus.Faulted, operationResult.ErrorMessage, operationResult.Exception);
     }
 }
