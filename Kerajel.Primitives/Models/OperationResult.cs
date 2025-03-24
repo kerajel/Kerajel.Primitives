@@ -2,7 +2,7 @@
 
 namespace Kerajel.Primitives.Models;
 
-public class OperationResult<T>
+public class OperationResult<T> : OperationResultBase
 {
     public OperationResult()
     {
@@ -35,16 +35,22 @@ public class OperationResult<T>
 
     public T? Content { get; set; }
 
-    public OperationStatus OperationStatus { get; set; }
+    public static OperationResult<T> Faulted(Exception ex)
+    {
+        return new OperationResult<T>(OperationStatus.Faulted, ex.Message, ex);
+    }
 
-    public Exception? Exception { get; set; }
-
-    public string? ErrorMessage { get; set; }
-
-    public bool Succeeded => OperationStatus == OperationStatus.Succeeded;
+    public static OperationResult<T> Succeeded(T result)
+    {
+        return new()
+        {
+            Content = result,
+            OperationStatus = OperationStatus.Succeeded,
+        };
+    }
 }
 
-public class OperationResult
+public class OperationResult : OperationResultBase
 {
     public OperationResult(OperationStatus operationStatus, string? errorMessage = default, Exception? exception = default)
     {
@@ -64,14 +70,6 @@ public class OperationResult
         OperationStatus = operationStatus;
     }
 
-    public OperationStatus OperationStatus { get; set; }
-
-    public string? ErrorMessage { get; set; }
-
-    public Exception? Exception { get; set; }
-
-    public bool Succeeded => OperationStatus == OperationStatus.Succeeded;
-
     public static OperationResult FromFaulted<T>(OperationResult<T> operationResult)
     {
         return new OperationResult(OperationStatus.Faulted, operationResult.ErrorMessage, operationResult.Exception);
@@ -81,4 +79,15 @@ public class OperationResult
     {
         return new OperationResult(OperationStatus.Faulted, operationResult.ErrorMessage, operationResult.Exception);
     }
+}
+
+public abstract class OperationResultBase
+{
+    public OperationStatus OperationStatus { get; set; }
+
+    public Exception? Exception { get; set; }
+
+    public string? ErrorMessage { get; set; }
+
+    public bool IsSuccessful => OperationStatus == OperationStatus.Succeeded;
 }
