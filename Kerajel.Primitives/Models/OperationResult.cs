@@ -70,14 +70,24 @@ public class OperationResult : OperationResultBase
         OperationStatus = operationStatus;
     }
 
-    public static OperationResult FromFaulted<T>(OperationResult<T> operationResult)
+    public static OperationResult Faulted<T>(OperationResult<T> operationResult)
     {
         return new OperationResult(OperationStatus.Faulted, operationResult.ErrorMessage, operationResult.Exception);
     }
 
-    public static OperationResult FromFaulted(OperationResult operationResult)
+    public static OperationResult Faulted(OperationResult operationResult)
     {
         return new OperationResult(OperationStatus.Faulted, operationResult.ErrorMessage, operationResult.Exception);
+    }
+
+    public static OperationResult Faulted(Exception ex)
+    {
+        return new OperationResult(OperationStatus.Faulted, ex.Message, ex);
+    }
+
+    public static OperationResult Succeeded()
+    {
+        return new OperationResult(OperationStatus.Succeeded);
     }
 }
 
