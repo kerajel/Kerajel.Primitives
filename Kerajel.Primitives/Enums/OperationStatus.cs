@@ -1,9 +1,13 @@
 ﻿namespace Kerajel.Primitives.Enums;
 
-public enum OperationStatus
+public enum OperationStatus : short
 {
-    Unknown = 1,
-    Succeeded = 2,
-    Cancelled = 3,
-    Faulted = 4,
+    Unknown = 0,
+
+    Succeeded = 200,
+   
+    NotFound = 404,
+    Cancelled = 499,
+
+    Error = 500,
 }

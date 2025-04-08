@@ -37,12 +37,12 @@ public class OperationResult<T> : OperationResultBase
 
     public static OperationResult<T> Faulted(Exception ex)
     {
-        return new OperationResult<T>(OperationStatus.Faulted, ex.Message, ex);
+        return new OperationResult<T>(OperationStatus.Error, ex.Message, ex);
     }
 
     public static OperationResult<T> Faulted<K>(OperationResult<K> faultedResult)
     {
-        return new OperationResult<T>(OperationStatus.Faulted, faultedResult.ErrorMessage, faultedResult.Exception);
+        return new OperationResult<T>(OperationStatus.Error, faultedResult.ErrorMessage, faultedResult.Exception);
     }
 
     public static OperationResult<T> Succeeded(T result)
@@ -77,17 +77,17 @@ public class OperationResult : OperationResultBase
 
     public static OperationResult Faulted<T>(OperationResult<T> operationResult)
     {
-        return new OperationResult(OperationStatus.Faulted, operationResult.ErrorMessage, operationResult.Exception);
+        return new OperationResult(OperationStatus.Error, operationResult.ErrorMessage, operationResult.Exception);
     }
 
     public static OperationResult Faulted(OperationResult operationResult)
     {
-        return new OperationResult(OperationStatus.Faulted, operationResult.ErrorMessage, operationResult.Exception);
+        return new OperationResult(OperationStatus.Error, operationResult.ErrorMessage, operationResult.Exception);
     }
 
     public static OperationResult Faulted(Exception ex)
     {
-        return new OperationResult(OperationStatus.Faulted, ex.Message, ex);
+        return new OperationResult(OperationStatus.Error, ex.Message, ex);
     }
 
     public static OperationResult Succeeded()
@@ -105,4 +105,6 @@ public abstract class OperationResultBase
     public string? ErrorMessage { get; set; }
 
     public bool IsSuccessful => OperationStatus == OperationStatus.Succeeded;
+    public bool NotFound => OperationStatus == OperationStatus.NotFound;
+
 }
