@@ -105,6 +105,6 @@ public abstract class OperationResultBase
     public string? ErrorMessage { get; set; }
 
     public bool IsSuccessful => OperationStatus == OperationStatus.Succeeded;
-    public bool NotFound => OperationStatus == OperationStatus.NotFound;
 
+    public bool NotFound => OperationStatus == OperationStatus.NotFound;
 }
