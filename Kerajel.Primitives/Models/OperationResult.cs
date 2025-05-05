@@ -35,6 +35,11 @@ public class OperationResult<T> : OperationResultBase
 
     public T? Content { get; set; }
 
+    public static OperationResult<T> Faulted()
+    {
+        return new OperationResult<T>(OperationStatus.Error);
+    }
+
     public static OperationResult<T> Faulted(Exception ex)
     {
         return new OperationResult<T>(OperationStatus.Error, ex.Message, ex);
@@ -88,6 +93,11 @@ public class OperationResult : OperationResultBase
     public static OperationResult Faulted(Exception ex)
     {
         return new OperationResult(OperationStatus.Error, ex.Message, ex);
+    }
+
+    public static OperationResult Faulted()
+    {
+        return new OperationResult(OperationStatus.Error);
     }
 
     public static OperationResult Succeeded()
