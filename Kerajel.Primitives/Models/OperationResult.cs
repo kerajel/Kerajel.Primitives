@@ -40,6 +40,11 @@ public class OperationResult<T> : OperationResultBase
         return new OperationResult<T>(OperationStatus.Error, ex.Message, ex);
     }
 
+    public static OperationResult<T> Faulted()
+    {
+        return new OperationResult<T>(OperationStatus.Error);
+    }
+
     public static OperationResult<T> Faulted<K>(OperationResult<K> faultedResult)
     {
         return new OperationResult<T>(OperationStatus.Error, faultedResult.ErrorMessage, faultedResult.Exception);
